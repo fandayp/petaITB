@@ -4,7 +4,7 @@ class petaITB(object):
 	vertices = ""
 	
 	'''
-	with open("bangunan.txt") as f:
+	with open("res/bangunan.txt") as f:
 		z1 = 0
 		z2 = 10
 		lines = f.readlines()
@@ -26,7 +26,7 @@ class petaITB(object):
 		vertices = '(%s)' % (vertex)
 		'''
 		
-	with open("bangunan.txt") as f:
+	with open("res/bangunan.txt") as f:
 		z1 = 0
 		z2 = 10
 		lines = f.readlines()

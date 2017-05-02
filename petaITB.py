@@ -5,6 +5,16 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from ast import literal_eval as make_tuple
 
+from OpenGLContext import testingcontext
+BaseContext = testingcontext.getInteractive()
+
+# import from other files in project
+from texture import Texture
+from shaders.vertexShader import *
+from shaders.fragmentShader import *
+
+WIDTH = 640
+HEIGHT = 480
 
 class Xiaomi(object):
     distance = 0
@@ -16,7 +26,7 @@ class Xiaomi(object):
     vertice = []
     
     
-    with open("bangunan.txt") as f:
+    with open("res/bangunan.txt") as f:
 		z1 = 0
 		z2 = 10
 		lines = f.readlines()
@@ -56,10 +66,10 @@ class Xiaomi(object):
     #-------------------------------------
     def __init__(self):
         self.coordinates = [0,0,0]
-        self.depan_id = self.load_texture("depan.jpg")
-        self.belakang_id = self.load_texture("belakang.jpg")
-        self.samping1_id = self.load_texture("samping.jpg")
-        self.samping2_id = self.load_texture("samping2.jpg")
+        self.depan_id = self.load_texture("res/depan.jpg")
+        self.belakang_id = self.load_texture("res/belakang.jpg")
+        self.samping1_id = self.load_texture("res/samping.jpg")
+        self.samping2_id = self.load_texture("res/samping2.jpg")
 
     def load_texture(self,filename):
         textureSurface = pygame.image.load(filename)
@@ -132,7 +142,7 @@ class Xiaomi(object):
     
 def main():
     pygame.init()
-    pygame.display.set_mode((640,480),pygame.DOUBLEBUF|pygame.OPENGL)
+    pygame.display.set_mode((WIDTH,HEIGHT),pygame.DOUBLEBUF|pygame.OPENGL)
     pygame.display.set_caption("Xiaomi")
     clock = pygame.time.Clock()
     done = False
@@ -140,7 +150,7 @@ def main():
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     
-    gluPerspective(45,640.0/480.0,0.1,200.0)
+    gluPerspective(45,1.0 * WIDTH/HEIGHT ,0.1,200.0)
     
     glEnable(GL_DEPTH_TEST)
 
