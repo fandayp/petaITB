@@ -2,7 +2,6 @@ from OpenGLContext.arrays import array
 from OpenGL.GL import *
 import pygame
 
-
 class Texture(object):
 	def __init__(self, fileName):
 
