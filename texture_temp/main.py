@@ -134,7 +134,7 @@ class TestContext( BaseContext ):
 
                 self.tex[0].Bind(0)
                 # musti diubah jadi indices biar lebih gampang
-                glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, None)
+                glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, None)
 
                 #glDrawArrays(GL_TRIANGLES, 0, 18)
             finally:

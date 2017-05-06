@@ -20,7 +20,7 @@ from shaders.fragmentShader import *
 WIDTH = 800
 HEIGHT = 600
 
-class Xiaomi(object):
+class petaITB(object):
     distance = 0
     #rotation
     x_axis = 0.0
@@ -30,68 +30,62 @@ class Xiaomi(object):
     vertice = []
 
     with open("res/bangunan.txt") as f:
-    	z1 = 0
-    	z2 = 10
-    	lines = f.readlines()
+        z1 = 0
+        z2 = 10
+        lines = f.readlines()
 
-    	for i in lines:
-    		line = i.split('|')
-    		for j in line:
-    			if (j.find('*') == -1):
-    				point = j.split(',')
-    				vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z1, point[1])))
-    		for j in line:
-    			if (j.find('*') == -1):
-    				point = j.split(',')
-    				vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z2, point[1])))
+        for i in lines:
+            line = i.split('|')
+            for j in line:
+                if (j.find('*') == -1):
+                    point = j.split(',')
+                    vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z1, point[1])))
+            for j in line:
+                if (j.find('*') == -1):
+                    point = j.split(',')
+                    vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z2, point[1])))
 
-    		vertice.append(tuple(vertices))
+            vertice.append(tuple(vertices))
 
-    		del vertices[:]
+            del vertices[:]
 
     #vertices = ((0,0,55), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
+    
+
     vertices = [
-    #      x,  y,  z, x_tex, y_tex, r,  g,  b
-        [ -1, 0, 0, 0, 0, -1, 0, 1],
-        [  0, 0, 1, 0.1, 0.1, -1, 0, 2],
-        [  0, 1, 1, 0, 0.1, -1, 0, 2],
-        [ -1, 0, 0, 0.2, 0.2, -1, 0, 1],
-        [  0, 1, 1, 0.2, 0.3, -1, 0, 2],
-        [ -1, 1, 0, 0.3, 0.3, -1, 0, 1],
-        [  0, 0, 1, 0.4, 0.4, -1, 0, 2],
-        [  1, 0, 1, 0.1, 0.1, 1, 0, 2],
-        [  1, 1, 1, 0.4, 0.1, 1, 0, 2],
-        [  0, 0, 1, 0.5, 0.5, -1, 0, 2],
-        [  1, 1, 1, 0.7, 0.5, 1, 0, 2],
-        [  0, 1, 1, 0.7, 0.7, -1, 0, 2],
-        [  1, 0, 1, 0.8, 0.8, 1, 0, 2],
-        [  2, 0, 0, 0.8, 1.0, 1, 0, 1],
-        [  2, 1, 0, 1.0, 1.0, 1, 0, 1],
-        [  1, 0, 1, 0.0, 0.0, 1, 0, 2],
-        [  2, 1, 0, 1.0, 0.0, 1, 0, 1],
-        [  1, 1, 1, 1.0, 1.0, 1, 0, 2],
+    #      x,  y,  z, x_tex, y_tex, nor_x, nor_y, nor_z
+        [ -0.85, -1, 1, 0, 0, 0, 0, 1],
+        [ 0.85, -1, 1, 1, 0, 0, 0, 1],
+        [ 0.85, -1, -1, 1, 1, 0, 0, 1],
+        [ -0.85, -1, -1, 0, 1, 0, 0, 1],
+
+        [ 0.031, -1, -0.0757042*2, 0, 0, 0, 0, 1],#
+        [ 0.195, -1, -0.0757042*2, 1, 0, 0, 0, 1],#
+
+        [ 0.195, -1, -0.04049*2, 1, 1, 0, 0, 1],
+        [ 0.031, -1, -0.04049*2, 0, 1, 0, 0, 1],
+
+        [ 0.031, -0.92, -0.0757042*2, 0, 1, 0, 0, 1],#
+        [ 0.195, -0.92, -0.0757042*2, 1, 1, 0, 0, 1],#
+
+        [ 0.195, -0.92, -0.04049*2, 0, 1, 0, 0, 1],
+        [ 0.031, -0.92, -0.04049*2, 1, 1, 0, 0, 1],
     ]
+
+
     indices = [
         # use depan texture
-        [4, 0, 3, 7],
-
-        # use belakang texture
-        [1, 5, 6, 2],
-
-        # use samping1 texture
         [0, 1, 2, 3],
-        [4, 7, 6, 5],
-        [2, 6, 7, 3],
 
-        # use samping2 texture
-        [0, 4, 5, 1],
+        #depan belakang
+        [4, 5, 9, 8],
+        [7, 6, 10, 11],
 
-        #(9,10,11,12),
-        #(13,16,15,14),
-        #(9,13,14,10),
-        #(10,14,15,11),
-        #(11,15,16,12),
-        #(13,9,12,16),
+        #samping
+        [5, 6, 10, 9],
+        [4, 7, 11, 8],
+        #atas
+        [8, 9, 10, 11],
     ]
 
     texcoord = ((0,0),(1,0),(1,1),(0,1))
@@ -103,10 +97,9 @@ class Xiaomi(object):
         # initialize texture
         self.texEnum = ('depan', 'belakang', 'samping1', 'samping2')
         self.tex = [
-            Texture("res/depan.jpg"),
-            Texture("res/belakang.jpg"),
-            Texture("res/samping.jpg"),
-            Texture("res/samping2.jpg"),
+            Texture("res/jalan.jpg"),
+            Texture("res/lab-7-1.jpg"),
+            Texture("res/lab7-samping.jpg"),
         ]
 
 
@@ -179,14 +172,19 @@ class Xiaomi(object):
                 self.tex[0].Bind(0)
                 glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
+                self.tex[2].Bind(0)
+                glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, ctypes.c_void_p(16))
+
                 self.tex[1].Bind(0)
-                glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(16))
+                glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
+                """self.tex[1].Bind(0)
+                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, ctypes.c_void_p(12))
 
                 self.tex[2].Bind(0)
-                glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(32))
+                glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, ctypes.c_void_p(24))
 
                 self.tex[3].Bind(0)
-                glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(80))
+                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, ctypes.c_void_p(60))"""
 
             finally:
                 self.vertices.unbind()
@@ -204,8 +202,8 @@ class Xiaomi(object):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
-        glTranslatef(0,0,-60)
-
+        glTranslatef(0, 1,-60)
+        #glRotatef(30,30,60,0)
         glRotatef(self.y_axis,0,1,0)
 
         self.draw()
@@ -221,10 +219,10 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(45 , 1.0 * WIDTH/HEIGHT ,0.1,200.0)
+    gluPerspective(0.5, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
     glEnable(GL_DEPTH_TEST)
 
-    xiaomi = Xiaomi()
+    xiaomi = petaITB()
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
@@ -241,4 +239,4 @@ def main():
 
 
 if __name__ == '__main__':
-	main()
+    main()
