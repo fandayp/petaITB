@@ -69,8 +69,7 @@ class petaITB(object):
 
         [ 0.390, -0.92, -0.08098],
         [ 0.062, -0.92, -0.08098],
-
-        # Bangunan
+        
     ]
 
     texOnly = [
@@ -132,6 +131,7 @@ class petaITB(object):
             self.vertOnly[startIndex + 7] + self.texOnly[2] + self.norOnly[startNor],
             self.vertOnly[startIndex + 4] + self.texOnly[3] + self.norOnly[startNor],
 
+            # atas, texture same with samping 
             self.vertOnly[startIndex + 4] + self.texOnly[0] + self.norOnly[startNor],
             self.vertOnly[startIndex + 5] + self.texOnly[1] + self.norOnly[startNor],
             self.vertOnly[startIndex + 6] + self.texOnly[2] + self.norOnly[startNor],
@@ -280,7 +280,7 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
+    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
     glEnable(GL_DEPTH_TEST)
 
     petaitb = petaITB()
