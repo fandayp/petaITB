@@ -57,6 +57,7 @@ class petaITB(object):
         [ 0.85, -1, -1],
         [-0.85, -1, -1],
 
+        # Bangunan Labtek VII
         [ 0.062, -1, -0.1514084],#
         [ 0.390, -1, -0.1514084],#
 
@@ -68,6 +69,8 @@ class petaITB(object):
 
         [ 0.390, -0.92, -0.08098],
         [ 0.062, -0.92, -0.08098],
+
+        # Bangunan
     ]
 
     texOnly = [
@@ -87,32 +90,6 @@ class petaITB(object):
         vertOnly[1] + texOnly[1] + norOnly[0],
         vertOnly[2] + texOnly[2] + norOnly[0],
         vertOnly[3] + texOnly[3] + norOnly[0],
-
-        # Bangunan Labtek VII
-        vertOnly[4] + texOnly[0] + norOnly[0],
-        vertOnly[5] + texOnly[1] + norOnly[0],
-        vertOnly[9] + texOnly[2] + norOnly[0],
-        vertOnly[8] + texOnly[3] + norOnly[0],
-
-        vertOnly[7] + texOnly[0] + norOnly[0],
-        vertOnly[6] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[11] + texOnly[3] + norOnly[0],
-
-        vertOnly[5] + texOnly[0] + norOnly[0],
-        vertOnly[6] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[9] + texOnly[3] + norOnly[0],
-
-        vertOnly[4] + texOnly[0] + norOnly[0],
-        vertOnly[7] + texOnly[1] + norOnly[0],
-        vertOnly[11] + texOnly[2] + norOnly[0],
-        vertOnly[8] + texOnly[3] + norOnly[0],
-
-        vertOnly[8] + texOnly[0] + norOnly[0],
-        vertOnly[9] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[11] + texOnly[3] + norOnly[0],
     ]
 
     ind = [
@@ -162,6 +139,11 @@ class petaITB(object):
         ]
         return vert_ans
 
+    # masukkan base dari bangunan disini
+    def initVertices(self):
+        self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
+        self.vert.extend(self.makeCuboid(12))
+
     #-------------------------------------
     def __init__(self):
 
@@ -183,6 +165,8 @@ class petaITB(object):
         except RuntimeError as err:
             sys.stderr.write( err.args[0] )
             sys.exit( 1 )
+
+        self.initVertices()
 
         self.vertices = vbo.VBO(np.array(self.vert, dtype='f'))
         self.indices = vbo.VBO(np.array(self.ind, dtype='uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
@@ -290,7 +274,7 @@ class petaITB(object):
 def main():
     pygame.init()
     pygame.display.set_mode((WIDTH , HEIGHT),pygame.DOUBLEBUF | pygame.OPENGL)
-    pygame.display.set_caption("Xiaomi")
+    pygame.display.set_caption("petaITB")
     clock = pygame.time.Clock()
     done = False
 
@@ -299,7 +283,7 @@ def main():
     gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
     glEnable(GL_DEPTH_TEST)
 
-    xiaomi = petaITB()
+    petaitb = petaITB()
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
@@ -307,7 +291,7 @@ def main():
             if event.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
 
-        xiaomi.render_scene()
+        petaitb.render_scene()
 
         pygame.display.flip()
         clock.tick(30)
