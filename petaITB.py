@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-import pygame
+import sys,pygame
 import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from pygame.locals import *
+from pygame.constants import *
 
 from OpenGL.arrays import vbo
 from OpenGL.GL.shaders import compileProgram, compileShader
@@ -19,6 +21,9 @@ from shaders.fragmentShader import *
 
 WIDTH = 800
 HEIGHT = 600
+rx, ry = (0,0)
+tx, ty = (0,0)
+zpos = 5
 
 class petaITB(object):
     distance = 0
@@ -201,14 +206,18 @@ class petaITB(object):
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-
-        glTranslatef(0, 1,-60)
+        global ry, rx, tx, ty, zpos
+        glTranslate(tx/20., ty/20., - zpos)
+        glRotate(ry, 1, 0, 0)
+        glRotate(rx, 0, 1, 0)
+        #  glTranslatef(0, 1,-60)
         #glRotatef(30,30,60,0)
-        glRotatef(self.y_axis,0,1,0)
+        #  glRotatef(self.y_axis,0,1,0)
 
         self.draw()
 
         self.y_axis = self.y_axis - 1
+
 
 def main():
     pygame.init()
@@ -221,19 +230,42 @@ def main():
     glLoadIdentity()
     gluPerspective(0.5, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
     glEnable(GL_DEPTH_TEST)
-
+    global rx, ry, ty, tx, zpos
+    
+    rotate = move = False
+	
     xiaomi = petaITB()
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
+        for e in pygame.event.get(): # User did something
+            if e.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
-
+            elif e.type == KEYDOWN and e.key == K_ESCAPE:
+                sys.exit()
+            elif e.type == MOUSEBUTTONDOWN:
+                if e.button == 4: zpos = max(1, zpos-1)
+                elif e.button == 5: zpos += 1
+                elif e.button == 1: rotate = True
+                elif e.button == 3: move = True
+            elif e.type == MOUSEBUTTONUP:
+                if e.button == 1: rotate = False
+                elif e.button == 3: move = False
+            elif e.type == MOUSEMOTION:
+                i, j = e.rel
+                if rotate:
+                    rx += i
+                    ry += j
+                if move:
+                    tx += i
+                    ty -= j
+        clock.tick(30)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        # RENDER OBJECT
         xiaomi.render_scene()
 
         pygame.display.flip()
-        clock.tick(30)
+    
     pygame.quit()
 
 
