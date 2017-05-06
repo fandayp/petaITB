@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pygame
+import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
@@ -48,8 +49,28 @@ class Xiaomi(object):
 
     		del vertices[:]
 
-    #vertices = ((0,0,055), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
-
+    #vertices = ((0,0,55), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
+    vertices = [
+    #      x,  y,  z, x_tex, y_tex, r,  g,  b
+        [ -1, 0, 0, 0, 0, -1, 0, 1],
+        [  0, 0, 1, 0.1, 0.1, -1, 0, 2],
+        [  0, 1, 1, 0, 0.1, -1, 0, 2],
+        [ -1, 0, 0, 0.2, 0.2, -1, 0, 1],
+        [  0, 1, 1, 0.2, 0.3, -1, 0, 2],
+        [ -1, 1, 0, 0.3, 0.3, -1, 0, 1],
+        [  0, 0, 1, 0.4, 0.4, -1, 0, 2],
+        [  1, 0, 1, 0.1, 0.1, 1, 0, 2],
+        [  1, 1, 1, 0.4, 0.1, 1, 0, 2],
+        [  0, 0, 1, 0.5, 0.5, -1, 0, 2],
+        [  1, 1, 1, 0.7, 0.5, 1, 0, 2],
+        [  0, 1, 1, 0.7, 0.7, -1, 0, 2],
+        [  1, 0, 1, 0.8, 0.8, 1, 0, 2],
+        [  2, 0, 0, 0.8, 1.0, 1, 0, 1],
+        [  2, 1, 0, 1.0, 1.0, 1, 0, 1],
+        [  1, 0, 1, 0.0, 0.0, 1, 0, 2],
+        [  2, 1, 0, 1.0, 0.0, 1, 0, 1],
+        [  1, 1, 1, 1.0, 1.0, 1, 0, 2],
+    ]
     indices = [
         # use depan texture
         [4, 0, 3, 7],
@@ -95,12 +116,25 @@ class Xiaomi(object):
                 compileShader( VERTEX_SHADER, GL_VERTEX_SHADER ),
                 compileShader( FRAGMENT_SHADER, GL_FRAGMENT_SHADER )
             )
-        except RuntimeError, err:
+        except RuntimeError as err:
             sys.stderr.write( err.args[0] )
             sys.exit( 1 )
 
-        self.vertices = vbo.VBO(array(vertices, 'f'))
-        self.indices = vbo.VBO(array(indices, 'uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
+        self.vertices = vbo.VBO(np.array(self.vertices, dtype='f'))
+        self.indices = vbo.VBO(np.array(self.indices, dtype='uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
+
+        for uniform in (
+            'Global_ambient',
+            'Light_ambient',
+            'Light_diffuse',
+            'Light_location',
+            'Material_ambient',
+            'Material_diffuse',
+        ):
+            location = glGetUniformLocation( self.shader, uniform )
+            if location in ( None, -1 ):
+                print ('Warning, no uniform: %s'%( uniform ))
+            setattr( self, uniform+ '_loc', location )
 
         for attribute in (
             'Vertex_position',
@@ -109,7 +143,7 @@ class Xiaomi(object):
         ):
             location = glGetAttribLocation(self.shader, attribute)
             if location in ( None, -1 ):
-                print 'Warning, no attribute: %s'%( attribute )
+                print ('Warning, no attribute: %s' %( attribute ))
             setattr( self, attribute + '_loc', location )
 
     def initMesh(self):
@@ -141,6 +175,7 @@ class Xiaomi(object):
             self.vertices.bind()
             self.indices.bind()
             try:
+                self.initMesh()
                 self.tex[0].Bind(0)
                 glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
@@ -156,11 +191,15 @@ class Xiaomi(object):
             finally:
                 self.vertices.unbind()
                 self.indices.unbind()
+
+                glDisableVertexAttribArray( self.Vertex_position_loc ) # 0
+                glDisableVertexAttribArray( self.Vertex_texCoord_loc ) # 1
+                glDisableVertexAttribArray( self.Vertex_normal_loc ) # 2
         finally:
             glUseProgram(0)
 
     def render_scene(self):
-        Display.clear()
+        Display.Clear()
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()

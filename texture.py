@@ -1,4 +1,3 @@
-from OpenGLContext.arrays import array
 from OpenGL.GL import *
 import pygame
 
