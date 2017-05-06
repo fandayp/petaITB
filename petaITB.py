@@ -51,31 +51,74 @@ class petaITB(object):
 
     #vertices = ((0,0,55), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
     
+    vertOnly = [
+        [-0.85, -1, 1],
+        [ 0.85, -1, 1],
+        [ 0.85, -1, -1],
+        [-0.85, -1, -1],
 
-    vertices = [
-    #      x,  y,  z, x_tex, y_tex, nor_x, nor_y, nor_z
-        [ -0.85, -1, 1, 0, 0, 0, 0, 1],
-        [ 0.85, -1, 1, 1, 0, 0, 0, 1],
-        [ 0.85, -1, -1, 1, 1, 0, 0, 1],
-        [ -0.85, -1, -1, 0, 1, 0, 0, 1],
+        [ 0.062, -1, -0.1514084],#
+        [ 0.390, -1, -0.1514084],#
 
-        [ 0.031, -1, -0.0757042*2, 0, 0, 0, 0, 1],#
-        [ 0.195, -1, -0.0757042*2, 1, 0, 0, 0, 1],#
+        [ 0.390, -1, -0.08098],
+        [ 0.062, -1, -0.08098],
 
-        [ 0.195, -1, -0.04049*2, 1, 1, 0, 0, 1],
-        [ 0.031, -1, -0.04049*2, 0, 1, 0, 0, 1],
+        [ 0.062, -0.92, -0.1514084],#
+        [ 0.390, -0.92, -0.1514084],#
 
-        [ 0.031, -0.92, -0.0757042*2, 0, 1, 0, 0, 1],#
-        [ 0.195, -0.92, -0.0757042*2, 1, 1, 0, 0, 1],#
-
-        [ 0.195, -0.92, -0.04049*2, 0, 1, 0, 0, 1],
-        [ 0.031, -0.92, -0.04049*2, 1, 1, 0, 0, 1],
+        [ 0.390, -0.92, -0.08098],
+        [ 0.062, -0.92, -0.08098],
     ]
 
+    texOnly = [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+    ]
+
+    norOnly = [
+        [0, 0, 1],
+    ]
+
+    vertices = [
+        # ALAS
+        vertOnly[0] + texOnly[0] + norOnly[0],
+        vertOnly[1] + texOnly[1] + norOnly[0],
+        vertOnly[2] + texOnly[2] + norOnly[0],
+        vertOnly[3] + texOnly[3] + norOnly[0],
+
+        # Bangunan Labtek VII
+        vertOnly[4] + texOnly[0] + norOnly[0],
+        vertOnly[5] + texOnly[1] + norOnly[0],
+        vertOnly[9] + texOnly[2] + norOnly[0],
+        vertOnly[8] + texOnly[3] + norOnly[0],
+
+        vertOnly[7] + texOnly[0] + norOnly[0],
+        vertOnly[6] + texOnly[1] + norOnly[0],
+        vertOnly[10] + texOnly[2] + norOnly[0],
+        vertOnly[11] + texOnly[3] + norOnly[0],
+
+        vertOnly[5] + texOnly[0] + norOnly[0],
+        vertOnly[6] + texOnly[1] + norOnly[0],
+        vertOnly[10] + texOnly[2] + norOnly[0],
+        vertOnly[9] + texOnly[3] + norOnly[0],
+
+        vertOnly[4] + texOnly[0] + norOnly[0],
+        vertOnly[7] + texOnly[1] + norOnly[0],
+        vertOnly[11] + texOnly[2] + norOnly[0],
+        vertOnly[8] + texOnly[3] + norOnly[0],
+
+        vertOnly[8] + texOnly[0] + norOnly[0],
+        vertOnly[9] + texOnly[1] + norOnly[0],
+        vertOnly[10] + texOnly[2] + norOnly[0],
+        vertOnly[11] + texOnly[3] + norOnly[0],
+    ]
 
     indices = [
         # use depan texture
         [0, 1, 2, 3],
+
 
         #depan belakang
         [4, 5, 9, 8],
@@ -88,14 +131,11 @@ class petaITB(object):
         [8, 9, 10, 11],
     ]
 
-    texcoord = ((0,0),(1,0),(1,1),(0,1))
     #-------------------------------------
     def __init__(self):
 
-        self.coordinates = [0,0,0] # buat apa?
-
         # initialize texture
-        self.texEnum = ('depan', 'belakang', 'samping1', 'samping2')
+        self.texEnum = ('jalan', 'lab-7-1', 'lab7-samping')
         self.tex = [
             Texture("res/jalan.jpg"),
             Texture("res/lab-7-1.jpg"),
@@ -170,13 +210,17 @@ class petaITB(object):
             try:
                 self.initMesh()
                 self.tex[0].Bind(0)
-                glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
+                glDrawArrays(GL_QUADS, 0, 4)
+                #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
                 self.tex[2].Bind(0)
-                glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, ctypes.c_void_p(16))
+                glDrawArrays(GL_QUADS, 4, 8)
+                #glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, ctypes.c_void_p(16))
 
                 self.tex[1].Bind(0)
-                glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
+                glDrawArrays(GL_QUADS, 12, 12)
+                
+                #glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
                 """self.tex[1].Bind(0)
                 glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, ctypes.c_void_p(12))
 
@@ -204,7 +248,7 @@ class petaITB(object):
 
         glTranslatef(0, 1,-60)
         #glRotatef(30,30,60,0)
-        glRotatef(self.y_axis,0,1,0)
+        glRotatef(self.y_axis,0,1,1)
 
         self.draw()
 
@@ -219,7 +263,7 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(0.5, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
+    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
     glEnable(GL_DEPTH_TEST)
 
     xiaomi = petaITB()
