@@ -300,6 +300,56 @@ class petaITB(object):
         [-0.376761, -0.950000, -0.851542],
         [-0.545775, -0.950000, -0.851542],
 
+		# CRCS
+		[0.447183, -1, -0.637324],
+		[0.580986, -1, -0.626761],
+		[0.584507, -1, -0.788732],
+		[0.457746, -1, -0.795775],
+		[0.447183, -0.930000, -0.637324],
+		[0.580986, -0.930000, -0.626761],
+		[0.584507, -0.930000, -0.788732],
+		[0.457746, -0.930000, -0.795775],
+		
+		# Labtek IV
+		[0.447183, -1, -0.538732],
+		[0.792254, -1, -0.507042],
+		[0.795775, -1, -0.556338],
+		[0.450704, -1, -0.584507],
+		[0.447183, -0.945000, -0.538732],
+		[0.792254, -0.945000, -0.507042],
+		[0.795775, -0.945000, -0.556338],
+		[0.450704, -0.945000, -0.584507],
+		
+		# BSC-B
+		[0.468310, -1, -0.323944],
+		[0.725352, -1, -0.306338],
+		[0.728873, -1, -0.341549],
+		[0.471831, -1, -0.362676],
+		[0.468310, -0.960000, -0.323944],
+		[0.725352, -0.960000, -0.306338],
+		[0.728873, -0.960000, -0.341549],
+		[0.471831, -0.960000, -0.362676],
+		
+		# Kimia Atas
+		[0.464789, -1, -0.228873],
+		[0.693662, -1, -0.204225],
+		[0.697183, -1, -0.281690],
+		[0.471831, -1, -0.302817],
+		[0.464789, -0.980000, -0.228873],
+		[0.693662, -0.980000, -0.204225],
+		[0.697183, -0.980000, -0.281690],
+		[0.471831, -0.980000, -0.302817],
+		
+		# Kimia Bawah
+		[0.457746, -1, -0.133803],
+		[0.714789, -1, -0.109155],
+		[0.721831, -1, -0.172535],
+		[0.464789, -1, -0.197183],
+		[0.457746, -0.980000, -0.133803],
+		[0.714789, -0.980000, -0.109155],
+		[0.721831, -0.980000, -0.172535],
+		[0.464789, -0.980000, -0.197183],
+		
     ]
 
     texOnly = [
@@ -452,6 +502,27 @@ class petaITB(object):
 
             Texture("res/labxi-samping.jpg"),
             Texture("res/labxi-depan.jpg"),
+            
+            # CRCS
+            Texture("res/crcs-samping.jpg"),
+            Texture("res/crcs-depan.jpg"),
+            
+            # Labtek IV
+            Texture("res/labtekIV-samping.jpg"),
+            Texture("res/labtekIV-depan.jpg"),
+            
+            # BSC-B
+            Texture("res/bsc-b-samping.jpg"),
+            Texture("res/bsc-b-depan.jpg"),
+            
+            # Kimia Atas
+            Texture("res/kimia-atas-samping.jpg"),
+            Texture("res/kimia-atas-depan.jpg"),
+            
+            # Kimia Bawah
+            Texture("res/kimia-bawah-samping.jpg"),
+            Texture("res/kimia-atas-depan.jpg"),
+            
         ]
 
         # initialize shader
@@ -579,7 +650,6 @@ class petaITB(object):
 
         self.y_axis = self.y_axis - 1
 
-
 def main():
     pygame.init()
     pygame.display.set_mode((WIDTH , HEIGHT),pygame.DOUBLEBUF | pygame.OPENGL)
@@ -591,7 +661,7 @@ def main():
     glLoadIdentity()
     #gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
     
-    gluPerspective(30, 1.0 * WIDTH/HEIGHT, 0.1, 500.0)
+    gluPerspective(30, 1.0 * WIDTH/HEIGHT, 0.001, 500.0)
     glEnable(GL_DEPTH_TEST)
     glMatrixMode(GL_MODELVIEW)
 
@@ -687,7 +757,7 @@ def main():
                     tx += i
                     ty -= j
         clock.tick(30)
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        
         # RENDER OBJECT
         petaitb.render_scene()
         pygame.display.flip()

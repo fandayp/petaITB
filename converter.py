@@ -2,27 +2,19 @@
 # ((z - (HEIGHT/2))/HEIGHT)*2 = z
 WIDTH = 484
 HEIGHT = 568
-x1 = 87 #x kiri atas gedung
-x2 = 135 #x kanan atas gedung
 
-z1 = 288 #z atas
-z2 = 306 #z bawah
+x_real = [369, 407, 408, 372] 
+z_real = [61, 64, 18, 16]
 
-h = 0.01
+h = 0.07
 
-w1 = float (x1 - (WIDTH/2)) / HEIGHT * 2
-z1 = float (z1 - (WIDTH/2)) / HEIGHT * 2
-w2 = float (x2 - (WIDTH/2)) / HEIGHT * 2
-z2 = float (z1 - (WIDTH/2)) / HEIGHT * 2
+x = [float(x - (WIDTH / 2)) / HEIGHT * 2 for x in x_real]
+z = [float(z - (WIDTH / 2)) / HEIGHT * 2 for z in z_real]
 
 h = -1 + h
-print ('[%f, -1, %f],'%(w1,z1))
-print ('[%f, -1, %f],'%(w2,z1))
+for i in range(len(x)):
+	print ('[%f, -1, %f],'%(x[i],z[i]))
 
-print ('[%f, -1, %f],'%(w2,z2))
-print ('[%f, -1, %f],'%(w1,z2))
+for i in range(len(x)):
+	print ('[%f, %f, %f],'%(x[i],h,z[i]))
 
-print ('[%f, %f, %f],'%(w1,h,z1))
-print ('[%f, %f, %f],'%(w2,h,z1))
-print ('[%f, %f, %f],'%(w2,h,z2))
-print ('[%f, %f, %f],'%(w1,h,z2))
