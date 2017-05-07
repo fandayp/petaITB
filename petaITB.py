@@ -58,6 +58,7 @@ class petaITB(object):
         [ 0.85, -1, -1],
         [-0.85, -1, -1],
 
+        # Bangunan Labtek VII
         [ 0.062, -1, -0.1514084],#
         [ 0.390, -1, -0.1514084],#
 
@@ -69,6 +70,7 @@ class petaITB(object):
 
         [ 0.390, -0.92, -0.08098],
         [ 0.062, -0.92, -0.08098],
+        
     ]
 
     texOnly = [
@@ -82,44 +84,17 @@ class petaITB(object):
         [0, 0, 1],
     ]
 
-    vertices = [
+    vert = [
         # ALAS
         vertOnly[0] + texOnly[0] + norOnly[0],
         vertOnly[1] + texOnly[1] + norOnly[0],
         vertOnly[2] + texOnly[2] + norOnly[0],
         vertOnly[3] + texOnly[3] + norOnly[0],
-
-        # Bangunan Labtek VII
-        vertOnly[4] + texOnly[0] + norOnly[0],
-        vertOnly[5] + texOnly[1] + norOnly[0],
-        vertOnly[9] + texOnly[2] + norOnly[0],
-        vertOnly[8] + texOnly[3] + norOnly[0],
-
-        vertOnly[7] + texOnly[0] + norOnly[0],
-        vertOnly[6] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[11] + texOnly[3] + norOnly[0],
-
-        vertOnly[5] + texOnly[0] + norOnly[0],
-        vertOnly[6] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[9] + texOnly[3] + norOnly[0],
-
-        vertOnly[4] + texOnly[0] + norOnly[0],
-        vertOnly[7] + texOnly[1] + norOnly[0],
-        vertOnly[11] + texOnly[2] + norOnly[0],
-        vertOnly[8] + texOnly[3] + norOnly[0],
-
-        vertOnly[8] + texOnly[0] + norOnly[0],
-        vertOnly[9] + texOnly[1] + norOnly[0],
-        vertOnly[10] + texOnly[2] + norOnly[0],
-        vertOnly[11] + texOnly[3] + norOnly[0],
     ]
 
-    indices = [
+    ind = [
         # use depan texture
         [0, 1, 2, 3],
-
 
         #depan belakang
         [4, 5, 9, 8],
@@ -131,6 +106,44 @@ class petaITB(object):
         #atas
         [8, 9, 10, 11],
     ]
+
+    def makeCuboid(self, startIndex, startNor = 0):
+        vert_ans = [
+            # depan belakang texture
+
+            self.vertOnly[startIndex + 0] + self.texOnly[0] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 1] + self.texOnly[1] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 5] + self.texOnly[2] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 4] + self.texOnly[3] + self.norOnly[startNor],
+
+            self.vertOnly[startIndex + 3] + self.texOnly[0] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 2] + self.texOnly[1] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 6] + self.texOnly[2] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 7] + self.texOnly[3] + self.norOnly[startNor],
+
+            # samping texture
+            self.vertOnly[startIndex + 1] + self.texOnly[0] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 2] + self.texOnly[1] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 6] + self.texOnly[2] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 5] + self.texOnly[3] + self.norOnly[startNor],
+
+            self.vertOnly[startIndex + 0] + self.texOnly[0] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 3] + self.texOnly[1] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 7] + self.texOnly[2] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 4] + self.texOnly[3] + self.norOnly[startNor],
+
+            # atas, texture same with samping 
+            self.vertOnly[startIndex + 4] + self.texOnly[0] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 5] + self.texOnly[1] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 6] + self.texOnly[2] + self.norOnly[startNor],
+            self.vertOnly[startIndex + 7] + self.texOnly[3] + self.norOnly[startNor],
+        ]
+        return vert_ans
+
+    # masukkan base dari bangunan disini
+    def initVertices(self):
+        self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
+        self.vert.extend(self.makeCuboid(12))
 
     #-------------------------------------
     def __init__(self):
@@ -154,8 +167,10 @@ class petaITB(object):
             sys.stderr.write( err.args[0] )
             sys.exit( 1 )
 
-        self.vertices = vbo.VBO(np.array(self.vertices, dtype='f'))
-        self.indices = vbo.VBO(np.array(self.indices, dtype='uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
+        self.initVertices()
+
+        self.vertices = vbo.VBO(np.array(self.vert, dtype='f'))
+        self.indices = vbo.VBO(np.array(self.ind, dtype='uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
 
         for uniform in (
             'Global_ambient',
@@ -210,16 +225,18 @@ class petaITB(object):
             self.indices.bind()
             try:
                 self.initMesh()
+
                 self.tex[0].Bind(0)
                 glDrawArrays(GL_QUADS, 0, 4)
                 #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
-                self.tex[2].Bind(0)
-                glDrawArrays(GL_QUADS, 4, 8)
-                #glDrawElements(GL_QUADS, 8, GL_UNSIGNED_INT, ctypes.c_void_p(16))
-
-                self.tex[1].Bind(0)
-                glDrawArrays(GL_QUADS, 12, 12)
+                cuboid_count = (self.vert.__len__ - 4) / 20
+                for i in range(0, cuboid_count):
+                    self.tex[i + 2].Bind(0)
+                    glDrawArrays(GL_QUADS, i * 20 + 4, 8)
+                    
+                    self.tex[i + 1].Bind(0)
+                    glDrawArrays(GL_QUADS, i * 20 + 12, 12)
                 
                 #glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
                 """self.tex[1].Bind(0)
@@ -258,16 +275,16 @@ class petaITB(object):
 def main():
     pygame.init()
     pygame.display.set_mode((WIDTH , HEIGHT),pygame.DOUBLEBUF | pygame.OPENGL)
-    pygame.display.set_caption("Xiaomi")
+    pygame.display.set_caption("petaITB")
     clock = pygame.time.Clock()
     done = False
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
+    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
     glEnable(GL_DEPTH_TEST)
 
-    xiaomi = petaITB()
+    petaitb = petaITB()
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
@@ -275,7 +292,7 @@ def main():
             if event.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
 
-        xiaomi.render_scene()
+        petaitb.render_scene()
 
         pygame.display.flip()
         clock.tick(30)
