@@ -54,27 +54,101 @@ class petaITB(object):
 
             del vertices[:]
 
-    #vertices = ((0,0,55), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
-    
     vertOnly = [
         [-0.85, -1, 1],
         [ 0.85, -1, 1],
         [ 0.85, -1, -1],
         [-0.85, -1, -1],
 
-        # Bangunan Labtek VII
-        [ 0.062, -1, -0.1514084],#
-        [ 0.390, -1, -0.1514084],#
+        # Bangunan Lab Mesin
+        [-0.714789, -1, -0.313380],
+        [-0.478873, -1, -0.313380],
+        [-0.478873, -1, -0.853216],
+        [-0.714789, -1, -0.853216],
+        [-0.714789, -0.950000, -0.313380],
+        [-0.478873, -0.950000, -0.313380],
+        [-0.478873, -0.950000, -0.853216],
+        [-0.714789, -0.950000, -0.853216],
 
-        [ 0.390, -1, -0.08098],
-        [ 0.062, -1, -0.08098],
+        # Bangunan Labtek II
+        [-0.714789, -1, -0.109155],
+        [-0.584507, -1, -0.109155],
+        [-0.584507, -1, -0.852497],
+        [-0.714789, -1, -0.852497],
+        [-0.714789, -0.950000, -0.109155],
+        [-0.584507, -0.950000, -0.109155],
+        [-0.584507, -0.950000, -0.852497],
+        [-0.714789, -0.950000, -0.852497],
 
-        [ 0.062, -0.92, -0.1514084],#
-        [ 0.390, -0.92, -0.1514084],#
+        # Bangunan Labtek XI
+        [-0.429577, -1, -0.274648],
+        [-0.253521, -1, -0.274648],
+        [-0.253521, -1, -0.853080],
+        [-0.429577, -1, -0.853080],
+        [-0.429577, -0.950000, -0.274648],
+        [-0.253521, -0.950000, -0.274648],
+        [-0.253521, -0.950000, -0.853080],
+        [-0.429577, -0.950000, -0.853080],
 
-        [ 0.390, -0.92, -0.08098],
-        [ 0.062, -0.92, -0.08098],
-        
+        #Bangungan Lab TR_GM
+        [-0.718310, -1, 0.088028],
+        [-0.605634, -1, 0.088028],
+        [-0.605634, -1, -0.851803],
+        [-0.718310, -1, -0.851803],
+        [-0.718310, -0.950000, 0.088028],
+        [-0.605634, -0.950000, 0.088028],
+        [-0.605634, -0.950000, -0.851803],
+        [-0.718310, -0.950000, -0.851803],
+
+        #Bangungan Lab KEE
+        [-0.545775, -1, 0.161972],
+        [-0.376761, -1, 0.161972],
+        [-0.376761, -1, -0.851542],
+        [-0.545775, -1, -0.851542],
+        [-0.545775, -0.950000, 0.161972],
+        [-0.376761, -0.950000, 0.161972],
+        [-0.376761, -0.950000, -0.851542],
+        [-0.545775, -0.950000, -0.851542],
+
+            # #Bangungan GKU Timur
+            # [0.531690, -1, -0.095070],
+            # [0.721831, -1, -0.095070],
+            # [0.721831, -1, 0.000000],
+            # [0.531690, -1, 0.000000],
+            # [0.531690, -0.950000, -0.095070],
+            # [0.721831, -0.950000, -0.095070],
+            # [0.721831, -0.950000, 0.000000],
+            # [0.531690, -0.950000, 0.000000],
+
+            # #Bangungan Doping
+            # [0.464789, -1, 0.066901],
+            # [0.577465, -1, 0.066901],
+            # [0.577465, -1, 0.133803],
+            # [0.464789, -1, 0.133803],
+            # [0.464789, -0.950000, 0.066901],
+            # [0.577465, -0.950000, 0.066901],
+            # [0.577465, -0.950000, 0.133803],
+            # [0.464789, -0.950000, 0.133803],
+
+            # #M Tek Geodesi
+            # [0.644366, -1, 0.010563],
+            # [0.711268, -1, 0.010563],
+            # [0.711268, -1, 0.088028],
+            # [0.644366, -1, 0.088028],
+            # [0.644366, -0.990000, 0.010563],
+            # [0.711268, -0.990000, 0.010563],
+            # [0.711268, -0.990000, 0.088028],
+            # [0.644366, -0.990000, 0.088028],
+
+            # #M.S & T Jil Raya (?)
+            # [0.654930, -1, 0.098592],
+            # [0.707746, -1, 0.098592],
+            # [0.707746, -1, 0.169014],
+            # [0.654930, -1, 0.169014],
+            # [0.654930, -0.990000, 0.098592],
+            # [0.707746, -0.990000, 0.098592],
+            # [0.707746, -0.990000, 0.169014],
+            # [0.654930, -0.990000, 0.169014],
     ]
 
     texOnly = [
@@ -114,7 +188,6 @@ class petaITB(object):
     def makeCuboid(self, startIndex, startNor = 0):
         vert_ans = [
             # depan belakang texture
-
             self.vertOnly[startIndex + 0] + self.texOnly[0] + self.norOnly[startNor],
             self.vertOnly[startIndex + 1] + self.texOnly[1] + self.norOnly[startNor],
             self.vertOnly[startIndex + 5] + self.texOnly[2] + self.norOnly[startNor],
@@ -146,18 +219,32 @@ class petaITB(object):
 
     # masukkan base dari bangunan disini
     def initVertices(self):
-        self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
-        # self.vert.extend(self.makeCuboid(12))
+        for i in range(0, 9):
+            self.vert.extend(self.makeCuboid(i*4+4))
 
     #-------------------------------------
     def __init__(self):
 
         # initialize texture
-        self.texEnum = ('jalan', 'lab-7-1', 'lab7-samping')
+        self.texEnum = ('jalan','roof','lab7-kirikanan', 'lab7-depanbelakang')
         self.tex = [
             Texture("res/jalan.jpg"),
-            Texture("res/lab-7-1.jpg"),
-            Texture("res/lab7-samping.jpg"),
+            Texture("res/roof.jpg"),
+
+            Texture("res/labmesin-samping.jpg"),
+            Texture("res/labmesin-depan.jpg"),
+
+            Texture("res/labtekII-samping.jpg"),
+            Texture("res/labtekII-depan.jpg"),
+
+            Texture("res/labxi-samping.jpg"),
+            Texture("res/labxi-depan.jpg"),
+
+            Texture("res/labtrgm-samping.jpg"),
+            Texture("res/labtrgm-depan.jpg"),
+
+            Texture("res/labxi-samping.jpg"),
+            Texture("res/labxi-depan.jpg"),
         ]
 
         # initialize shader
@@ -234,22 +321,28 @@ class petaITB(object):
                 #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
                 cuboid_count = (self.vert.__len__() - 4) / 20
-                for i in range(0, cuboid_count):
-                    self.tex[i + 2].Bind(0)
-                    glDrawArrays(GL_QUADS, i * 20 + 4, 8)
-                    
-                    self.tex[i + 1].Bind(0)
-                    glDrawArrays(GL_QUADS, i * 20 + 12, 12)
                 
-                #glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
-                """self.tex[1].Bind(0)
-                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, ctypes.c_void_p(12))
+                #khusus labtek tengah texture sama
+                for i in range(0, 5):
+                    self.tex[3].Bind(0) #depan belakang
+                    glDrawArrays(GL_QUADS, i * 20 + 4, 8)
+                   
+                    self.tex[2].Bind(0) #kanan kiri
+                    glDrawArrays(GL_QUADS, i * 20 + 12, 8)
 
-                self.tex[2].Bind(0)
-                glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, ctypes.c_void_p(24))
+                    self.tex[1].Bind(0) #atap
+                    glDrawArrays(GL_QUADS, i * 20 + 20, 4)
 
-                self.tex[3].Bind(0)
-                glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, ctypes.c_void_p(60))"""
+                #bangunan berikutnya
+                for i in range(5, int(cuboid_count)):
+                    self.tex[(i-3)*2 + 1].Bind(0) #depan belakang
+                    glDrawArrays(GL_QUADS, i * 20 + 4, 8)
+
+                    self.tex[(i-3)*2].Bind(0) #kanan kiri
+                    glDrawArrays(GL_QUADS, i * 20 + 12, 8)
+
+                    self.tex[1].Bind(0) #atap
+                    glDrawArrays(GL_QUADS, i * 20 + 20, 4)
 
             finally:
                 self.vertices.unbind()
