@@ -142,7 +142,7 @@ class petaITB(object):
     # masukkan base dari bangunan disini
     def initVertices(self):
         self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
-        self.vert.extend(self.makeCuboid(12))
+        # self.vert.extend(self.makeCuboid(12))
 
     #-------------------------------------
     def __init__(self):
@@ -229,7 +229,7 @@ class petaITB(object):
                 glDrawArrays(GL_QUADS, 0, 4)
                 #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
-                cuboid_count = (self.vert.__len__ - 4) / 20
+                cuboid_count = (self.vert.__len__() - 4) / 20
                 for i in range(0, cuboid_count):
                     self.tex[i + 2].Bind(0)
                     glDrawArrays(GL_QUADS, i * 20 + 4, 8)
