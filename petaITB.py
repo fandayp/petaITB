@@ -288,21 +288,43 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-
-    gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
-    #gluPerspective(20, 1.0 * WIDTH/HEIGHT, 1, 500.0)
+    #gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
+    
+    gluPerspective(30, 1.0 * WIDTH/HEIGHT, 0.1, 500.0)
     glEnable(GL_DEPTH_TEST)
     glMatrixMode(GL_MODELVIEW)
 
     petaitb = petaITB()
     global rx, ry, ty, tx, zpos
     
-    rotate = move = False
-	
+    rotate = move = pressed = False
+    into = 'A'
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
+        if into =='o' and pressed:
+             zpos += 1
+        elif into =='i' and pressed:
+             zpos = max(1, zpos-1)
+        elif into =='q' and pressed:
+             rx -= 1
+        elif into =='e' and pressed:
+             rx += 1
+        elif into =='w' and pressed:
+             ty -= 1
+        elif into =='s' and pressed:
+             ty += 1
+        elif into =='a' and pressed:
+             tx += 1
+        elif into =='d' and pressed:
+             tx -= 1
+        elif into =='r' and pressed:
+             ry += 1
+        elif into =='f' and pressed:
+             ry -= 1        			
         for e in pygame.event.get(): # User did something
+            if e.type == KEYUP:
+                pressed = False
             if e.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
             elif e.type == KEYDOWN and e.key == K_ESCAPE:
@@ -314,24 +336,44 @@ def main():
                 elif e.button == 3: move = True
             elif e.type == KEYDOWN and e.key == K_o:
                 zpos += 1
+                into = 'o'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_i:
                 zpos = max(1, zpos-1)
+                into = 'i'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_q:
                 rx -= 1
+                into = 'q'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_r:
                 ry += 1
+                into = 'r'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_f:
-                ry -=1
+                ry -= 1
+                into = 'f'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_e:
                 rx += 1
+                into = 'e'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_a:
                 tx += 1
+                into = 'a'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_d:
                 tx -= 1
+                into = 'd'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_w:
                 ty -=1
+                into = 'w'
+                pressed = True
             elif e.type == KEYDOWN and e.key == K_s:
                 ty += 1
+                into = 's'
+                pressed = True
             elif e.type == MOUSEBUTTONUP:
                 if e.button == 1: rotate = False
                 elif e.button == 3: move = False
