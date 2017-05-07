@@ -207,9 +207,9 @@ class petaITB(object):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
         global ry, rx, tx, ty, zpos
-        glTranslate(tx/20., ty/20., - zpos)
-        glRotate(ry, 1, 0, 0)
-        glRotate(rx, 0, 1, 0)
+        glTranslatef(tx/20., ty/20., - zpos)
+        glRotated(ry, 1, 0, 0)
+        glRotated(rx, 0, 1, 0)
         #  glTranslatef(0, 1,-60)
         #glRotatef(30,30,60,0)
         #  glRotatef(self.y_axis,0,1,0)
@@ -228,8 +228,10 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(0.5, 1.0 * WIDTH/HEIGHT, 0.1, 1000.0)
+    gluPerspective(20, 1.0 * WIDTH/HEIGHT, 1, 500.0)
     glEnable(GL_DEPTH_TEST)
+    glMatrixMode(GL_MODELVIEW)
+
     global rx, ry, ty, tx, zpos
     
     rotate = move = False
