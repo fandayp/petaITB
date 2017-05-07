@@ -3,10 +3,10 @@
 WIDTH = 484
 HEIGHT = 568
 
-x_real = [369, 407, 408, 372] 
-z_real = [61, 64, 18, 16]
+x_real = [87, 135, 135, 87] 
+z_real = [288, 288, 306, 306]
 
-h = 0.07
+h = 0.05
 
 x = [float(x - (WIDTH / 2)) / HEIGHT * 2 for x in x_real]
 z = [float(z - (WIDTH / 2)) / HEIGHT * 2 for z in z_real]
