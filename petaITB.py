@@ -61,16 +61,42 @@ class petaITB(object):
         # Bangunan Labtek VII
         [ 0.062, -1, -0.1514084],#
         [ 0.390, -1, -0.1514084],#
-
         [ 0.390, -1, -0.08098],
         [ 0.062, -1, -0.08098],
-
         [ 0.062, -0.92, -0.1514084],#
         [ 0.390, -0.92, -0.1514084],#
-
         [ 0.390, -0.92, -0.08098],
         [ 0.062, -0.92, -0.08098],
-        
+
+        # Bangunan Labtek VII
+        [-0.380282, -1, -0.147887],
+        [-0.052817, -1, -0.147887],
+        [-0.052817, -1, -0.073944],
+        [-0.380282, -1, -0.073944],
+        [-0.380282, -0.920000, -0.147887],
+        [-0.052817, -0.920000, -0.147887],
+        [-0.052817, -0.920000, -0.073944],
+        [-0.380282, -0.920000, -0.073944],
+
+        # Bangunan Labtek V
+        [-0.345070, -1, 0.014085],
+        [-0.042254, -1, 0.014085],
+        [-0.042254, -1, 0.098592],
+        [-0.345070, -1, 0.098592],
+        [-0.345070, -0.920000, 0.014085],
+        [-0.042254, -0.920000, 0.014085],
+        [-0.042254, -0.920000, 0.098592],
+        [-0.345070, -0.920000, 0.098592],
+
+        #Bangungan Labtek VIII
+        [0.049296, -1, -0.007042],
+        [0.369718, -1, -0.007042],
+        [0.369718, -1, 0.098592],
+        [0.049296, -1, 0.098592],
+        [0.049296, -0.920000, -0.007042],
+        [0.369718, -0.920000, -0.007042],
+        [0.369718, -0.920000, 0.098592],
+        [0.049296, -0.920000, 0.098592],
     ]
 
     texOnly = [
@@ -110,7 +136,6 @@ class petaITB(object):
     def makeCuboid(self, startIndex, startNor = 0):
         vert_ans = [
             # depan belakang texture
-
             self.vertOnly[startIndex + 0] + self.texOnly[0] + self.norOnly[startNor],
             self.vertOnly[startIndex + 1] + self.texOnly[1] + self.norOnly[startNor],
             self.vertOnly[startIndex + 5] + self.texOnly[2] + self.norOnly[startNor],
@@ -142,8 +167,9 @@ class petaITB(object):
 
     # masukkan base dari bangunan disini
     def initVertices(self):
-        self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
-        self.vert.extend(self.makeCuboid(12))
+        #self.vert.extend(self.makeCuboid(4)) # Bangunan Labtek VII
+        for i in range(0, 4):
+            self.vert.extend(self.makeCuboid(i*8+4))
 
     #-------------------------------------
     def __init__(self):
@@ -152,8 +178,9 @@ class petaITB(object):
         self.texEnum = ('jalan', 'lab-7-1', 'lab7-samping')
         self.tex = [
             Texture("res/jalan.jpg"),
-            Texture("res/lab-7-1.jpg"),
-            Texture("res/lab7-samping.jpg"),
+            Texture("res/roof.jpg"),
+            Texture("res/lab7-kirikanan.jpg"),
+            Texture("res/lab7-depanbelakang.jpg"),
         ]
 
 
@@ -230,13 +257,24 @@ class petaITB(object):
                 glDrawArrays(GL_QUADS, 0, 4)
                 #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
-                cuboid_count = (self.vert.__len__ - 4) / 20
-                for i in range(0, cuboid_count):
-                    self.tex[i + 2].Bind(0)
+                cuboid_count = (self.vert.__len__() - 4) / 20
+                #khusus labtek tengah texture sama
+                for i in range(0, 4):
+                    self.tex[3].Bind(0) #depan belakang
                     glDrawArrays(GL_QUADS, i * 20 + 4, 8)
                     
-                    self.tex[i + 1].Bind(0)
-                    glDrawArrays(GL_QUADS, i * 20 + 12, 12)
+                    self.tex[2].Bind(0) #kanan kiri
+                    glDrawArrays(GL_QUADS, i * 20 + 12, 8)
+
+                    self.tex[1].Bind(0) #atap
+                    glDrawArrays(GL_QUADS, i * 20 + 20, 4)
+
+                """for i in range(0, int(cuboid_count)):
+                    self.tex[i + 2].Bind(0) #depan belakang
+                    glDrawArrays(GL_QUADS, i * 20 + 4, 8)
+                    
+                    self.tex[i + 1].Bind(0) #kanan kiri
+                    glDrawArrays(GL_QUADS, i * 20 + 12, 12)"""
                 
                 #glDrawElements(GL_QUADS, 12, GL_UNSIGNED_INT, ctypes.c_void_p(48))
                 """self.tex[1].Bind(0)
@@ -265,8 +303,8 @@ class petaITB(object):
         glLoadIdentity()
 
         glTranslatef(0, 1,-60)
-        #glRotatef(30,30,60,0)
-        glRotatef(self.y_axis,0,1,1)
+        glRotatef(30, 0, 60, 0)
+        #glRotatef(self.y_axis,0,1,1)
 
         self.draw()
 
