@@ -9,10 +9,6 @@ z1 = 288 #z atas
 z2 = 306 #z bawah
 
 h = 0.01
-# w1 = ((x1 - (WIDTH/2))/HEIGHT)*2
-# z1 = ((z1 - (HEIGHT/2))/HEIGHT)*2
-# w2 = ((x2 - (WIDTH/2))/HEIGHT)*2
-# z2 = ((z2 - (HEIGHT/2))/HEIGHT)*2
 
 w1 = float (x1 - (WIDTH/2)) / HEIGHT * 2
 z1 = float (z1 - (WIDTH/2)) / HEIGHT * 2
