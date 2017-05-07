@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-import pygame
+import sys,pygame
 import numpy as np
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from pygame.locals import *
+from pygame.constants import *
 
 from OpenGL.arrays import vbo
 from OpenGL.GL.shaders import compileProgram, compileShader
@@ -19,6 +21,9 @@ from shaders.fragmentShader import *
 
 WIDTH = 800
 HEIGHT = 600
+rx, ry = (0,0)
+tx, ty = (0,0)
+zpos = 5
 
 class petaITB(object):
     distance = 0
@@ -155,7 +160,6 @@ class petaITB(object):
             Texture("res/lab7-samping.jpg"),
         ]
 
-
         # initialize shader
         try:
             self.shader = compileProgram(
@@ -262,14 +266,18 @@ class petaITB(object):
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-
-        glTranslatef(0, 1,-60)
+        global ry, rx, tx, ty, zpos
+        glTranslatef(tx/20., ty/20., - zpos)
+        glRotated(ry, 1, 0, 0)
+        glRotated(rx, 0, 1, 0)
+        #  glTranslatef(0, 1,-60)
         #glRotatef(30,30,60,0)
-        glRotatef(self.y_axis,0,1,1)
-
+        #  glRotatef(self.y_axis,0,1,0)
+        
         self.draw()
 
         self.y_axis = self.y_axis - 1
+
 
 def main():
     pygame.init()
@@ -280,24 +288,68 @@ def main():
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
+
     gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
+    #gluPerspective(20, 1.0 * WIDTH/HEIGHT, 1, 500.0)
     glEnable(GL_DEPTH_TEST)
+    glMatrixMode(GL_MODELVIEW)
 
     petaitb = petaITB()
+    global rx, ry, ty, tx, zpos
+    
+    rotate = move = False
+	
     #----------- Main Program Loop -------------------------------------
     while not done:
         # --- Main event loop
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.QUIT: # If user clicked close
+        for e in pygame.event.get(): # User did something
+            if e.type == pygame.QUIT: # If user clicked close
                 done = True # Flag that we are done so we exit this loop
-
-        petaitb.render_scene()
-
-        pygame.display.flip()
+            elif e.type == KEYDOWN and e.key == K_ESCAPE:
+                sys.exit()
+            elif e.type == MOUSEBUTTONDOWN:
+                if e.button == 4: zpos = max(1, zpos-1)
+                elif e.button == 5: zpos += 1
+                elif e.button == 1: rotate = True
+                elif e.button == 3: move = True
+            elif e.type == KEYDOWN and e.key == K_o:
+                zpos += 1
+            elif e.type == KEYDOWN and e.key == K_i:
+                zpos = max(1, zpos-1)
+            elif e.type == KEYDOWN and e.key == K_q:
+                rx -= 1
+            elif e.type == KEYDOWN and e.key == K_r:
+                ry += 1
+            elif e.type == KEYDOWN and e.key == K_f:
+                ry -=1
+            elif e.type == KEYDOWN and e.key == K_e:
+                rx += 1
+            elif e.type == KEYDOWN and e.key == K_a:
+                tx += 1
+            elif e.type == KEYDOWN and e.key == K_d:
+                tx -= 1
+            elif e.type == KEYDOWN and e.key == K_w:
+                ty -=1
+            elif e.type == KEYDOWN and e.key == K_s:
+                ty += 1
+            elif e.type == MOUSEBUTTONUP:
+                if e.button == 1: rotate = False
+                elif e.button == 3: move = False
+            elif e.type == MOUSEMOTION:
+                i, j = e.rel
+                if rotate:
+                    rx += i
+                    ry += j
+                if move:
+                    tx += i
+                    ty -= j
         clock.tick(30)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        # RENDER OBJECT
+        petaitb.render_scene()
+        pygame.display.flip()
+    
     pygame.quit()
-
-
 
 if __name__ == '__main__':
     main()
