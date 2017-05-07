@@ -50,7 +50,8 @@ class petaITB(object):
             del vertices[:]
 
     #vertices = ((0,0,55), (7,0,055), (7,0,037), (0,0,037), (0,10,055), (7,10,055), (7,10,037), (0,10,037))
-    
+    # ((x - (WIDTH/2))/HEIGHT)*2 = x
+    # ((z - (HEIGHT/2))/HEIGHT)*2 = z
     vertOnly = [
         [-0.85, -1, 1],
         [ 0.85, -1, 1],
