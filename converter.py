@@ -1,7 +1,10 @@
 # ((x - (WIDTH/2))/HEIGHT)*2 = x
 # ((z - (HEIGHT/2))/HEIGHT)*2 = z
+
+import sys
 WIDTH = 484
 HEIGHT = 568
+
 
 # x_real = [369, 407, 408, 372] 
 # z_real = [61, 64, 18, 16]
@@ -28,14 +31,19 @@ HEIGHT = 568
 # x_real = [93, 165, 165, 93] 
 # z_real = [410, 410, 368, 368]
 
-x_real = [47, 78, 78, 47] 
-z_real = [385, 385, 355, 355]
+# x_real = [47, 78, 78, 47] 
+# z_real = [385, 385, 355, 355]
 
 
-h = 0.01
+# h = 0.01
+
+x_real = [float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4])] 
+z_real = [float(sys.argv[5]), float(sys.argv[6]), float(sys.argv[7]), float(sys.argv[8])]
+
+h = float(sys.argv[9])
 
 x = [float(x - (WIDTH / 2)) / HEIGHT * 2 for x in x_real]
-z = [float(z - (WIDTH / 2)) / HEIGHT * 2 for z in z_real]
+z = [float(z - (HEIGHT / 2)) / HEIGHT * 2 for z in z_real]
 
 h = -1 + h
 for i in range(len(x)):
