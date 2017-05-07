@@ -2,11 +2,13 @@
 # ((z - (HEIGHT/2))/HEIGHT)*2 = z
 WIDTH = 484
 HEIGHT = 568
-x1 = 256 #x kiri atas gedung
-z1 = 282 #z atas
-x2 = 347 #x kanan atas gedung
-z2 = 312 #z bawah
-h = 0.08
+x1 = 428 #x kiri atas gedung
+x2 = 443 #x kanan atas gedung
+
+z1 = 312 #z atas
+z2 = 332 #z bawah
+
+h = 0.01
 w1 = ((x1 - (WIDTH/2))/HEIGHT)*2
 z1 = ((z1 - (HEIGHT/2))/HEIGHT)*2
 w2 = ((x2 - (WIDTH/2))/HEIGHT)*2
