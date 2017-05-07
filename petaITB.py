@@ -1037,7 +1037,7 @@ def main():
     glLoadIdentity()
     #gluPerspective(2, 1.0 * WIDTH/HEIGHT, 0.01, 1000.0)
     
-    gluPerspective(30, 1.0 * WIDTH/HEIGHT, 0.001, 500.0)
+    gluPerspective(20, 1.0 * WIDTH/HEIGHT, 0.001, 1000.0)
     glEnable(GL_DEPTH_TEST)
     glMatrixMode(GL_MODELVIEW)
 
@@ -1053,9 +1053,9 @@ def main():
              zpos += 1
         elif into =='i' and pressed:
              zpos = max(1, zpos-1)
-        elif into =='q' and pressed:
-             rx -= 1
         elif into =='e' and pressed:
+             rx -= 1
+        elif into =='q' and pressed:
              rx += 1
         elif into =='w' and pressed:
              ty -= 1
@@ -1089,9 +1089,9 @@ def main():
                 zpos = max(1, zpos-1)
                 into = 'i'
                 pressed = True
-            elif e.type == KEYDOWN and e.key == K_q:
+            elif e.type == KEYDOWN and e.key == K_e:
                 rx -= 1
-                into = 'q'
+                into = 'e'
                 pressed = True
             elif e.type == KEYDOWN and e.key == K_r:
                 ry += 1
@@ -1101,9 +1101,9 @@ def main():
                 ry -= 1
                 into = 'f'
                 pressed = True
-            elif e.type == KEYDOWN and e.key == K_e:
+            elif e.type == KEYDOWN and e.key == K_q:
                 rx += 1
-                into = 'e'
+                into = 'q'
                 pressed = True
             elif e.type == KEYDOWN and e.key == K_a:
                 tx += 1
