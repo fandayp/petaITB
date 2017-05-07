@@ -248,6 +248,26 @@ def main():
                 elif e.button == 5: zpos += 1
                 elif e.button == 1: rotate = True
                 elif e.button == 3: move = True
+            elif e.type == KEYDOWN and e.key == K_o:
+                zpos += 1
+            elif e.type == KEYDOWN and e.key == K_i:
+                zpos = max(1, zpos-1)
+            elif e.type == KEYDOWN and e.key == K_q:
+                rx -= 1
+            elif e.type == KEYDOWN and e.key == K_r:
+                ry += 1
+            elif e.type == KEYDOWN and e.key == K_f:
+                ry -=1
+            elif e.type == KEYDOWN and e.key == K_e:
+                rx += 1
+            elif e.type == KEYDOWN and e.key == K_a:
+                tx += 1
+            elif e.type == KEYDOWN and e.key == K_d:
+                tx -= 1
+            elif e.type == KEYDOWN and e.key == K_w:
+                ty -=1
+            elif e.type == KEYDOWN and e.key == K_s:
+                ty += 1
             elif e.type == MOUSEBUTTONUP:
                 if e.button == 1: rotate = False
                 elif e.button == 3: move = False
