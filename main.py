@@ -26,33 +26,10 @@ tx, ty = (0,0)
 zpos = 5
 
 class petaITB(object):
-    distance = 0
     #rotation
     x_axis = 0.0
     y_axis = 0.0
     z_axis = 0.0
-    vertices = []
-    vertice = []
-
-    with open("res/bangunan.txt") as f:
-        z1 = 0
-        z2 = 10
-        lines = f.readlines()
-
-        for i in lines:
-            line = i.split('|')
-            for j in line:
-                if (j.find('*') == -1):
-                    point = j.split(',')
-                    vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z1, point[1])))
-            for j in line:
-                if (j.find('*') == -1):
-                    point = j.split(',')
-                    vertices.append(make_tuple('(%d,%s,%s)' % (int(point[0])-270, z2, point[1])))
-
-            vertice.append(tuple(vertices))
-
-            del vertices[:]
 
     vertOnly = [
         [-0.85, -1, 1],
@@ -631,9 +608,6 @@ class petaITB(object):
 		[-0.443662, -0.950000, 0.021127],
 		[-0.573944, -0.950000, 0.021127],
 
-
-
-
     ]
 
     texOnly = [
@@ -653,21 +627,6 @@ class petaITB(object):
         vertOnly[1] + texOnly[1] + norOnly[0],
         vertOnly[2] + texOnly[2] + norOnly[0],
         vertOnly[3] + texOnly[3] + norOnly[0],
-    ]
-
-    ind = [
-        # use depan texture
-        [0, 1, 2, 3],
-
-        #depan belakang
-        [4, 5, 9, 8],
-        [7, 6, 10, 11],
-
-        #samping
-        [5, 6, 10, 9],
-        [4, 7, 11, 8],
-        #atas
-        [8, 9, 10, 11],
     ]
 
     def makeCuboid(self, startIndex, startNor = 0):
@@ -803,7 +762,7 @@ class petaITB(object):
             Texture("res/kimia-atas-samping.jpg"),
             Texture("res/kimia-atas-depan.jpg"),
 
-	    # Kimia Bawah
+	           # Kimia Bawah
             #Texture("res/kimia-bawah-samping.jpg"),
             #Texture("res/kimia-atas-depan.jpg"),
 
@@ -918,7 +877,6 @@ class petaITB(object):
             # GKU Barat
             Texture("res/gkub.jpg"),
             Texture("res/gkub.jpg"),
-
         ]
 
         # initialize shader
@@ -934,7 +892,6 @@ class petaITB(object):
         self.initVertices()
 
         self.vertices = vbo.VBO(np.array(self.vert, dtype='f'))
-        self.indices = vbo.VBO(np.array(self.ind, dtype='uint32'),target='GL_ELEMENT_ARRAY_BUFFER')
 
         for uniform in (
             'Global_ambient',
@@ -986,17 +943,13 @@ class petaITB(object):
 
         try:
             self.vertices.bind()
-            self.indices.bind()
             try:
                 self.initMesh()
 
                 self.tex[0].Bind(0)
                 glDrawArrays(GL_QUADS, 0, 4)
-                #glDrawElements(GL_QUADS, 4, GL_UNSIGNED_INT, ctypes.c_void_p(0))
 
                 cuboid_count = (self.vert.__len__() - 4) // 20
-
-
                 #khusus labtek tengah texture sama
                 for i in range(0, 5):
                     self.tex[3].Bind(0) #depan belakang
@@ -1021,7 +974,6 @@ class petaITB(object):
 
             finally:
                 self.vertices.unbind()
-                self.indices.unbind()
 
                 glDisableVertexAttribArray( self.Vertex_position_loc ) # 0
                 glDisableVertexAttribArray( self.Vertex_texCoord_loc ) # 1
