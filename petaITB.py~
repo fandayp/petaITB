@@ -808,8 +808,8 @@ class petaITB(object):
             Texture("res/kimia-atas-depan.jpg"),
             
 	    # Kimia Bawah
-            #Texture("res/kimia-bawah-samping.jpg"),
-            #Texture("res/kimia-atas-depan.jpg"),
+            Texture("res/kimia-bawah-samping.jpg"),
+            Texture("res/kimia-atas-depan.jpg"),
 
             # tvst
             Texture("res/tvst-depanbelakang.jpg"),
